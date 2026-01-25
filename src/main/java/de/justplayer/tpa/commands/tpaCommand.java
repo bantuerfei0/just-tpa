@@ -49,6 +49,20 @@ public class tpaCommand implements CommandExecutor {
             return true;
         }
 
+        boolean isSameWorld = target.getWorld().equals(player.getWorld());
+        boolean canTeleportToOtherWorlds = player.hasPermission("justplayer.tpa.world.other");
+        boolean canTeleportToSameWorld = player.hasPermission("justplayer.tpa.world.same");
+
+        if (!isSameWorld && !canTeleportToOtherWorlds) {
+            player.sendMessage(plugin.translate("messages.prefix") + plugin.translate("messages.errors.permission.other-world"));
+            return true;
+        }
+
+        if (isSameWorld && !canTeleportToSameWorld) {
+            player.sendMessage(plugin.translate("messages.prefix") + plugin.translate("messages.errors.permission.same-world"));
+            return true;
+        }
+
         if (plugin.cooldownManager.isOnCooldown(player.getUniqueId(), "tpa")) {
             player.sendMessage(plugin.translate("messages.prefix") + plugin.translate("messages.errors.cooldown",
                     Map.of("seconds", Integer.toString(plugin.cooldownManager.getCooldown(player.getUniqueId(), "tpa")))

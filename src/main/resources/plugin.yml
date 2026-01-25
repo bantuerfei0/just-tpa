@@ -54,6 +54,13 @@ permissions:
   justplayer.tpa.return:
     description: "Allows a player to return to the previous position after teleportation"
     default: true
+  justplayer.tpa.world.other:
+    description: "Allows the player to teleport to a location on a different world"
+    default: true
+  justplayer.tpa.world.same:
+    description: "Allows the player to teleport to a location in the same world"
+    default: true
+
   justplayer.tpa.reload:
     description: "Allows a player to reload the plugin configuration"
     default: op

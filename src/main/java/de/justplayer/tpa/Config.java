@@ -74,6 +74,8 @@ public class Config {
         config.addDefault("messages.errors.return-not-found", "You have no place to return to, or it is timed out.");
         config.addDefault("messages.errors.request-not-found-by", "You have no pending request from %playername%.");
         config.addDefault("messages.errors.cooldown", "You have to wait %seconds% seconds before you can send another teleport request.");
+        config.addDefault("messages.errors.permission.other-world", "Cross-world teleportation is not allowed.");
+        config.addDefault("messages.errors.permission.same-world", "You cannot teleport within this world.");
 
         config.addDefault("messages.request.sent", "Teleport request sent to %playername% they have %seconds% seconds to accept it.");
         config.addDefault("messages.request.return", "You will be returned to your last location.");

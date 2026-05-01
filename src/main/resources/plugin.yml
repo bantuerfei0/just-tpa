@@ -1,7 +1,7 @@
 name: "JustTPA"
-version: ${project.version}
+version: ${version}
 main: "de.justplayer.tpa.Plugin"
-api-version: '1.19'
+api-version: '1.21.11'
 author: "JustPlayer"
 description: "A simple TPA plugin without unnecessary dependencies"
 commands:

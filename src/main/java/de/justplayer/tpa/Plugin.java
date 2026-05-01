@@ -9,7 +9,6 @@ import de.justplayer.tpa.listeners.PlayerLeaveListener;
 import de.justplayer.tpa.listeners.PlayerMoveListener;
 import de.justplayer.tpa.utils.CooldownManager;
 import de.justplayer.tpa.utils.TeleportRequestManager;
-import org.bstats.bukkit.Metrics;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.PluginManager;
@@ -64,7 +63,6 @@ public class Plugin extends JavaPlugin {
 
         initialiseEvents();
         initialiseOptionalEvents();
-        initialiseStatistics();
         checkForUpdates();
 
         log("JustTPA initialized");
@@ -120,16 +118,6 @@ public class Plugin extends JavaPlugin {
     {
         return config.getBoolean("features." + feature);
     }
-
-    private void initialiseStatistics() {
-        if (!config.getBoolean("bStats.enabled") || isDevelopmentVersion) {
-            return;
-        }
-
-        new Metrics(this, 18743);
-        log("bStats enabled", "Info");
-    }
-
 
     private void checkForUpdates() {
         if (!config.getBoolean("check-for-updates") || isDevelopmentVersion || isGitVersion) {

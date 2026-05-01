@@ -55,11 +55,6 @@ public class Config {
                 "Check for updates on startup, this uses the modrinth api to get the newest version for your server."
         ));
 
-        config.addDefault("bStats.enabled", true);
-        config.setComments("bStats.enabled", List.of(
-                "Enable bStats for this plugin"
-        ));
-
         config.addDefault("messages.prefix", "§8[§6JustTPA§8] §7");
         config.addDefault("messages.reloaded", "Configuration has been reloaded.");
         config.addDefault("messages.usages.tpa", "Usage: /tpa <player>");

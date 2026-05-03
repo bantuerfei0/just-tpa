@@ -3,6 +3,8 @@ package de.justplayer.tpa.utils;
 import de.justplayer.tpa.Plugin;
 import de.justplayer.tpa.ReturnRequest;
 import de.justplayer.tpa.TeleportRequest;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -63,8 +65,8 @@ public class TeleportRequestManager {
 
                 cancelRequest(request,
                         "messages.request.timeout-to", Map.of("playername", receiver.getName()),
-                        "messages.request.timeout-from", Map.of("playername", sender.getName())
-                );
+                        "messages.request.timeout-from", Map.of("playername", sender.getName()),
+                        false);
 
                 continue;
             }
@@ -101,7 +103,9 @@ public class TeleportRequestManager {
                                 System.currentTimeMillis()
                         );
                         returnRequests.put(teleportPlayer.getUniqueId(), returnRequest);
-                        teleportPlayer.teleport(teleportPlayerTo);
+                        teleportPlayer.playSound(Sound.sound(Key.key("block.amethyst_block.chime"), Sound.Source.MASTER, 2, 0.8f));
+                        teleportPlayer.playSound(Sound.sound(Key.key("entity.enderman.teleport"), Sound.Source.MASTER, 1, 1));
+                        teleportPlayer.teleportAsync(teleportPlayerTo.getLocation());
                     }
                 }.runTask(plugin);
 
@@ -255,7 +259,7 @@ public class TeleportRequestManager {
         request.setAccepted(true);
     }
 
-    public void cancelRequest(TeleportRequest request, String senderMessage, String receiverMessage) {
+    public void cancelRequest(TeleportRequest request, String senderMessage, String receiverMessage, boolean isDeny) {
         var sender = plugin.getServer().getPlayer(request.getSender());
         var receiver = plugin.getServer().getPlayer(request.getReceiver());
         var prefix = plugin.translate("messages.prefix");
@@ -269,25 +273,25 @@ public class TeleportRequestManager {
             sender.sendMessage(prefix + senderMessage);
         }
 
-        if (receiver != null && receiverMessage != null && !receiverMessage.isEmpty()) {
+        if (!isDeny && receiver != null && receiverMessage != null && !receiverMessage.isEmpty()) {
             receiver.sendMessage(prefix + receiverMessage);
         }
 
         requests.remove(request);
     }
 
-    public void cancelRequest(TeleportRequest request, String key, Map<String, String> placeholders) {
-        cancelRequest(request, plugin.translate(key, placeholders));
+    public void cancelRequest(TeleportRequest request, String key, Map<String, String> placeholders, boolean isDeny) {
+        cancelRequest(request, plugin.translate(key, placeholders), isDeny);
     }
 
 
-    public void cancelRequest(TeleportRequest request, String senderKey, Map<String, String> senderPlaceholders, String receiverKey, Map<String, String> receiverPlaceholders) {
-        cancelRequest(request, plugin.translate(senderKey, senderPlaceholders), plugin.translate(receiverKey, receiverPlaceholders));
+    public void cancelRequest(TeleportRequest request, String senderKey, Map<String, String> senderPlaceholders, String receiverKey, Map<String, String> receiverPlaceholders, boolean isDeny) {
+        cancelRequest(request, plugin.translate(senderKey, senderPlaceholders), plugin.translate(receiverKey, receiverPlaceholders), isDeny);
     }
 
 
-    public void cancelRequest(TeleportRequest request, String reason) {
-        cancelRequest(request, reason, reason);
+    public void cancelRequest(TeleportRequest request, String reason, boolean isDeny) {
+        cancelRequest(request, reason, reason, isDeny);
     }
 
     public void cancelRequest(ReturnRequest request, String reason) {
@@ -302,7 +306,7 @@ public class TeleportRequestManager {
     }
 
     public void cancelRequest(TeleportRequest request) {
-        cancelRequest(request, "messages.request.canceled");
+        cancelRequest(request, "messages.request.canceled", false);
     }
 
     public void cancelRequest(ReturnRequest request) {

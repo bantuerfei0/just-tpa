@@ -39,8 +39,8 @@ public class tpacancelCommand implements CommandExecutor {
 
         plugin.teleportRequestManager.cancelRequest(request,
                 plugin.translate("messages.request.canceled"),
-                plugin.translate("messages.request.canceled-by", Map.of("playername", player.getName()))
-        );
+                plugin.translate("messages.request.canceled-by", Map.of("playername", player.getName())),
+                false);
 
         return true;
     }

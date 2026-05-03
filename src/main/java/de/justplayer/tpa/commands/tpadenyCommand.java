@@ -57,7 +57,7 @@ public class tpadenyCommand implements CommandExecutor {
                 return true;
             }
 
-            plugin.teleportRequestManager.cancelRequest(request,"messages.request.denied-by", Map.of("playername", player.getName()));
+            plugin.teleportRequestManager.cancelRequest(request,"messages.request.denied-by", Map.of("playername", player.getName()), true);
 
             player.sendMessage(plugin.translate("messages.prefix") + plugin.translate("messages.request.denied",
                     Map.of("playername", player.getName())
@@ -66,11 +66,11 @@ public class tpadenyCommand implements CommandExecutor {
             return true;
         }
 
-        TeleportRequest request = requests.get(0);
+        TeleportRequest request = requests.getFirst();
         Player requestSender = plugin.getServer().getPlayer(request.getSender());
         String senderName = (requestSender != null ? requestSender.getName() : "Unknown Player");
 
-        plugin.teleportRequestManager.cancelRequest(requests.get(0),"messages.request.denied-by", Map.of("playername", player.getName()));
+        plugin.teleportRequestManager.cancelRequest(requests.getFirst(),"messages.request.denied-by", Map.of("playername", player.getName()), true);
         player.sendMessage(plugin.translate("messages.prefix") + plugin.translate("messages.request.denied",
                 Map.of("playername", senderName)
         ));

@@ -42,8 +42,8 @@ public class PlayerMoveListener implements Listener {
                     "messages.request.moved-to",
                     Map.of("playername", receiver != null ? receiver.getName() : "[Offline]"),
                     "messages.request.moved-from",
-                    Map.of("playername", event.getPlayer().getName())
-            );
+                    Map.of("playername", event.getPlayer().getName()),
+                    false);
         }
 
         ReturnRequest returnRequest = this.plugin.teleportRequestManager.getPlayerReturnRequest(event.getPlayer().getUniqueId());

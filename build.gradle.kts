@@ -7,10 +7,10 @@ plugins {
 }
 
 group = "de.justplayer"
-version = "git"
+version = "git-26.1.2"
 description = "just-tpa"
 
-val api = "1.21.11"
+val api = "26.1.2"
 
 repositories {
     mavenCentral();
@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:$api-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:$api.build.+")
 }
 
 tasks {
